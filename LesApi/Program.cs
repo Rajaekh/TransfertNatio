@@ -2,12 +2,15 @@ using LesApi.Models;
 using LesApi.Services;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using Steeltoe.Discovery.Client;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.Configure<TransfertDatabaseSettings>(
-    builder.Configuration.GetSection(nameof(TransfertDatabaseSettings)));
+builder.Configuration.GetSection(nameof(TransfertDatabaseSettings)));
+builder.Services.AddControllers();
+builder.Services.AddDiscoveryClient(builder.Configuration);
 
 builder.Services.AddSingleton<ITransfertDatabaseSettings>(
     sp=>sp.GetRequiredService<IOptions<TransfertDatabaseSettings>>().Value);

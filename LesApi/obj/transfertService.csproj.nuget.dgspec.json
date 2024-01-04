@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\rajae\\Downloads\\apinet-main\\LesApi\\transfertService.csproj": {}
+    "C:\\Users\\rajae\\Downloads\\TransfertNational\\LesApi\\transfertService.csproj": {}
   },
   "projects": {
-    "C:\\Users\\rajae\\Downloads\\apinet-main\\LesApi\\transfertService.csproj": {
+    "C:\\Users\\rajae\\Downloads\\TransfertNational\\LesApi\\transfertService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\rajae\\Downloads\\apinet-main\\LesApi\\transfertService.csproj",
+        "projectUniqueName": "C:\\Users\\rajae\\Downloads\\TransfertNational\\LesApi\\transfertService.csproj",
         "projectName": "transfertService",
-        "projectPath": "C:\\Users\\rajae\\Downloads\\apinet-main\\LesApi\\transfertService.csproj",
+        "projectPath": "C:\\Users\\rajae\\Downloads\\TransfertNational\\LesApi\\transfertService.csproj",
         "packagesPath": "C:\\Users\\rajae\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\rajae\\Downloads\\apinet-main\\LesApi\\obj\\",
+        "outputPath": "C:\\Users\\rajae\\Downloads\\TransfertNational\\LesApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\rajae\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -53,9 +53,13 @@
               "target": "Package",
               "version": "[1.0.0, )"
             },
+            "Steeltoe.Discovery.ClientCore": {
+              "target": "Package",
+              "version": "[3.2.6, )"
+            },
             "Steeltoe.Discovery.Eureka": {
               "target": "Package",
-              "version": "[3.0.0, )"
+              "version": "[3.2.6, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
