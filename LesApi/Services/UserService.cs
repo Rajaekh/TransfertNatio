@@ -86,7 +86,7 @@ namespace LesApi.Services
 
         public User GetUserByIdentity(string Nidentity)
         {
-            return _user.Find(u => u.NIdentity == Nidentity).FirstOrDefault();
+            return _user.Find(u => u.nidentity == Nidentity).FirstOrDefault();
         }
 
         public List<User> GetAllUser()
@@ -103,5 +103,30 @@ namespace LesApi.Services
         {
             return ObjectId.TryParse(id, out _);
         }
+
+        public User deleteUser(string id)
+        {
+            if (!IsValidObjectIdFormat(id))
+            {
+                // Gérer le cas où l'ID n'est pas au bon format ObjectId
+                // Vous pouvez lever une exception, enregistrer une erreur, ou autre.
+                throw new ArgumentException("Invalid ObjectId format");
+            }
+
+            var filter = Builders<User>.Filter.Eq(u => u.Id, id);
+            var userToDelete = _user.FindOneAndDelete(filter);
+
+            if (userToDelete != null)
+            {
+                // L'utilisateur a été supprimé avec succès
+                return userToDelete;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+
     }
 }

@@ -37,12 +37,23 @@ namespace LesApi.Controllers
         // recuperer user by Identity:
         // recuperer user by Identity:
         [HttpGet("UserByIdentity/{Nid}")]
-        public ActionResult<User> GetUserById(string Nid)
+        public ActionResult<User> GetUserByIdentity(string Nid)
         {
             var user = _user.GetUserByIdentity(Nid);
             if (user == null)
             {
                 return NotFound($"User with Identity={Nid} not found");
+            }
+            return Ok(user);
+        }
+
+        [HttpGet("UserById/{id}")]
+        public ActionResult<User> GetUserById(string id)
+        {
+            var user = _user.GetUserById(id);
+            if (user == null)
+            {
+                return NotFound($"User with Identity={id} not found");
             }
             return Ok(user);
         }
@@ -89,6 +100,20 @@ namespace LesApi.Controllers
             return Ok(_user.GetUserByGSM(user.Gsm));
             
         }
+        [HttpDelete("{id}")]
+        public ActionResult<User> DeleteUser(string id)
+        {
+            if (id == null)
+            {
+                return BadRequest();
+            }
+               var deletedUser = _user.deleteUser(id);
+                return Ok(deletedUser);
+            }
+            
+       
+
+
 
 
     }

@@ -39,7 +39,7 @@ namespace LesApi.Controllers
             // Si le numéro de téléphone est unique, ajouter le client
             _beneficiaire.AddBeneficiaire(beneficiaire);
 
-            return Ok(_beneficiaire.GetBeneficiaireByGSM(beneficiaire.NumeroGsm));
+            return Ok(beneficiaire);
         }
 
     }

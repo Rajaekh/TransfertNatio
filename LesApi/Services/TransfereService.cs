@@ -225,8 +225,13 @@ namespace LesApi.Services
 
             // Générer la chaîne HTML à partir du modèle
             string htmlContent = $@"
-         <html>
+<!DOCTYPE html>
+<html lang=""en"">
 <head>
+<meta charset=""UTF-8"">
+    <meta name=""viewport"" content=""width=device-width, initial-scale=1.0"">
+    <link href=""https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"" rel=""stylesheet"">
+    
     <style>
        body {{
             font-family: 'Arial', sans-serif;
@@ -303,37 +308,37 @@ th {{background - color: #0C5973;
                           <tr>
                               <th>Reference du Transfert</th>
                             <td>{transferModel.Reference}</td>
-                        </tr>""
+                        </tr>
 
                           <tr>
                               <th>Client</th>
                             <td>{GetUserFullName(transferModel.IdClient)}</td>
-                        </tr>""
+                        </tr>
                         <tr>
                               <th>Beneficiaire</th>
                             <td>{GetBeneficiaireFullName(transferModel.IdBeneficiaire)}</td>
-                        </tr>""
+                        </tr>
                           <tr>
                               <th>ID Agent</th>
                             <td>{transferModel.Idagent}</td>
-                        </tr>""
+                        </tr>
                         <tr>
                               <th>Montant</th>
-                            <td>{transferModel.Montant}</td>
-                        </tr>""
+                            <td>{transferModel.Montant} DH</td>
+                        </tr>
                      
                             <tr>
                               <th>La Date de Transfert</th>
                             <td>{transferModel.DataeTransfert}</td>
-                            <tr>
+                            </tr>
                               <th>La Date D 'expiration</th>
                             <td>{transferModel.DataeExpiration}</td>
-                        </tr>""
-                        </tr>""
+                        </tr>
+                        
                           <tr>
                               <th>Frais</th>
                             <td>{transferModel.Frais}</td>
-                        </tr>""
+                        </tr>
                         <tr>
                             <th>Valeur des Frais</th>
                             <td>{transferModel.ValFrais}dh</td>
@@ -373,7 +378,7 @@ th {{background - color: #0C5973;
                 integrity=""sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM""
                 crossorigin=""anonymous""></script>
 
-        </body>";
+        </body>";
 
             return htmlContent;
         }

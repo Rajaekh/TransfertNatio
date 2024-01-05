@@ -32,8 +32,8 @@ namespace LesApi.Models
         [BsonElement("typePieceIdentity")]
         public string TypePieceIdentity { get; set; }
 
-        [BsonElement("nIdentity")]
-        public string NIdentity { get; set; }
+        [BsonElement("nidentity")]
+        public string nidentity { get; set; }
 
         [BsonElement("gsm")]
         public string Gsm { get; set; }

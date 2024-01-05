@@ -12,5 +12,6 @@ namespace LesApi.Services
         List<Beneficiaire> GetUserBeneficiaire(string IdUser);
         User EditUser(User user);
         User GetUserByIdentity(string Nidentity);
+        User deleteUser(string id);
     }
 }
