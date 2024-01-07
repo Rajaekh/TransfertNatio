@@ -88,7 +88,7 @@ namespace LesApi.Controllers
             }
         }
         [HttpGet("beneficiaire/{username}")]
-        public async Task<ActionResult<List<Beneficiaire>>> GetBeneficiaire(string username)
+        public async Task<ActionResult<List<Beneficaire>>> GetBeneficiaire(string username)
         {
             try
             {

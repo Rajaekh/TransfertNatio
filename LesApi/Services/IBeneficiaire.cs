@@ -4,9 +4,11 @@ namespace LesApi.Services
 {
     public interface IBeneficiaire
     {
-        Beneficiaire GetBeneficiaireById(string IdBeneficiaire);
-        Beneficiaire AddBeneficiaire(Beneficiaire beneficiaire);
-        Beneficiaire GetBeneficiaireByGSM(string gsm);
+        Beneficaire GetBeneficiaireById(string IdBeneficiaire);
+        Beneficaire AddBeneficiaire(Beneficaire beneficiaire);
+        Beneficaire GetBeneficiaireByGSM(string gsm);
+        Task<Beneficaire> AddBeneficiaireAsync(Beneficaire beneficiaire,string username);
+        Task<List<Beneficaire>> GetBeneficiairesByPhoneAndUsernameAsync(String phone, String username);
 
     }
 }

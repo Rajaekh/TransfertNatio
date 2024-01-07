@@ -9,7 +9,7 @@ namespace LesApi.Models
     {
         [BsonId]
         //[BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; } = String.Empty;
+        public string Id { get; set; };
 
         [BsonElement("name")]
         public string name { get; set; }

@@ -220,7 +220,7 @@ namespace LesApi.Controllers
         string GetBeneficiaireFullName(string beneficiaireId)
         {
             var beneficiaire = _beneficiaire.GetBeneficiaireById(beneficiaireId);
-            return beneficiaire != null ? beneficiaire.Prenom + " " + beneficiaire.Nom : "N/A";
+            return beneficiaire != null ? beneficiaire.prenom + " " + beneficiaire.nom : "N/A";
         }
 
         // Helper method to get user full name
@@ -229,6 +229,17 @@ namespace LesApi.Controllers
             var user = _user.GetUserById(userId);
             return user != null ? user.lastname + " " + user.name : "N/A";
         }
+
+          [HttpGet("getAllTrasfert/{idClient}")]
+          public ActionResult<List<Transfert>> GetAllTrasfertOfClient(string idClient)
+                {
+
+            if (idClient == null)
+            {
+                return BadRequest();
+            }
+            return _transfert.GetAllTransfertsOfClient(idClient);
+                }
 
     }
 }

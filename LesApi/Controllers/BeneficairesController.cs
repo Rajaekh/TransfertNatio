@@ -16,7 +16,7 @@ namespace LesApi.Controllers
 
         }
         [HttpGet("{gsm}")]
-        public ActionResult<Beneficiaire> Get(string gsm)
+        public ActionResult<Beneficaire> Get(string gsm)
         {
             var beneficiaire = _beneficiaire.GetBeneficiaireByGSM(gsm);
             if (beneficiaire == null)
@@ -25,22 +25,47 @@ namespace LesApi.Controllers
             }
             return Ok(beneficiaire);
         }
-        [HttpPost]
-        public ActionResult<Beneficiaire> Post([FromBody] Beneficiaire beneficiaire)
+
+
+
+        [HttpPost("{username}")]
+     
+        public async Task<ActionResult<Beneficaire>> Post([FromBody] Beneficaire beneficiaire, string username)
+
         {
             // Vérifier si le numéro de téléphone est déjà utilisé
-            var existingbenfecaire = _beneficiaire.GetBeneficiaireByGSM(beneficiaire.NumeroGsm);
-            if (existingbenfecaire != null)
+            var existingBeneficiaire = _beneficiaire.GetBeneficiaireByGSM(beneficiaire.numeroGsm);
+            if (existingBeneficiaire != null)
             {
                 // Le numéro de téléphone est déjà utilisé, renvoyer une réponse d'erreur
                 return Conflict("Le numéro de téléphone doit être unique.");
             }
 
-            // Si le numéro de téléphone est unique, ajouter le client
-            _beneficiaire.AddBeneficiaire(beneficiaire);
+            // Appeler la méthode asynchrone pour ajouter le bénéficiaire à distance
+         // Remplacez par le vrai nom d'utilisateur
+            var addedBeneficiaire = await _beneficiaire.AddBeneficiaireAsync(beneficiaire, username);
 
-            return Ok(beneficiaire);
+            if (addedBeneficiaire != null)
+            {
+                // La requête distante a réussi, vous pouvez traiter la réponse ou simplement la renvoyer
+                return Ok(addedBeneficiaire);
+            }
+            else
+            {
+                // Il y a eu une erreur lors de la requête distante, vous pouvez renvoyer une réponse d'erreur appropriée
+                return StatusCode(500, "Une erreur s'est produite lors de l'ajout du bénéficiaire à distance.");
+            }
+        }
+        [HttpGet("{phone}/{username}")]
+        public async Task<ActionResult<List<Beneficaire>>> GetBeneficiairesByPhoneAndUsername(string phone, string username)
+        {
+            List<Beneficaire> beneficiaires = await _beneficiaire.GetBeneficiairesByPhoneAndUsernameAsync(phone, username);
+
+            return Ok(beneficiaires);
         }
 
+
     }
+
 }
+

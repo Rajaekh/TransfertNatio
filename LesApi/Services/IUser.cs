@@ -15,7 +15,7 @@ namespace LesApi.Services
         Task<User> AddUserAsync(User user);
 
         DateTime GetDatePremierTransfert(string idClient);
-        Task<List<Beneficiaire>> GetBeneficiaireAsync(string username);
+        Task<List<Beneficaire>> GetBeneficiaireAsync(string username);
 
         User EditUser(User user);
         Task<User> EditUserAsync(User user, string username);

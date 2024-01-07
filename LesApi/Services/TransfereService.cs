@@ -386,7 +386,7 @@ th {{background - color: #0C5973;
         string GetBeneficiaireFullName(string beneficiaireId)
         {
             var beneficiaire = _beneficiaire.GetBeneficiaireById(beneficiaireId);
-            return beneficiaire != null ? beneficiaire.Prenom + " " + beneficiaire.Nom : "N/A";
+            return beneficiaire != null ? beneficiaire.prenom + " " + beneficiaire.nom : "N/A";
         }
 
         // Helper method to get user full name
@@ -394,6 +394,19 @@ th {{background - color: #0C5973;
         {
             var user = _user.GetUserById(userId);
             return user != null ? user.lastname + " " + user.name : "N/A";
+        }
+
+        public List<Transfert> GetAllTransfertsOfClient(string idClient)
+        {
+            if (idClient == null)
+            {              
+                return new List<Transfert>();
+            }
+
+            // Utilisez la méthode Find pour obtenir tous les transferts avec l'ID spécifié
+            var transferts = _transfert.Find(t => t.IdClient == idClient).ToList();
+
+            return transferts;
         }
 
     }

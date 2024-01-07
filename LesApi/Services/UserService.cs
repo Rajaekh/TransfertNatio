@@ -29,7 +29,7 @@ namespace LesApi.Services
             {
                 string apiUrl = "https://1b18-105-158-110-135.ngrok-free.app"; // gateway 8080
                 string endpoint = "/USER-SERVICE/users/admin/add-client";
-                string accessToken = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ5b3VuZXNzQGdtYWlsLmNvbSIsImlhdCI6MTcwNDQ2OTM2MywiZXhwIjo2MTY2NjA5NTYwMH0.dDVi0IaEoj-uaP0bqA-6gYeQC6rSQ7aOuV_sfImII1A";
+                string accessToken = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3MDQ1ODAwODEsImV4cCI6NjE2NjYwOTU2MDB9.n5GBa1iHS9qeL9co8GFhLV2Zq8q3e2m2T5QSt_Y5P2E";
 
                 // Ajouter l'en-tête d'autorisation
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken.Substring(7));
@@ -56,9 +56,9 @@ namespace LesApi.Services
                 }
             }
         }
-        public List<Beneficiaire> GetUserBeneficiaire(string userId)
+        public List<Beneficaire> GetUserBeneficiaire(string userId)
         {
-            List<Beneficiaire> beneficiaires = new List<Beneficiaire>();
+            List<Beneficaire> beneficiaires = new List<Beneficaire>();
             var user = _user.Find(u => u.Id == userId).FirstOrDefault();
 
             if (user != null && user.beneficiaires != null)
@@ -100,7 +100,7 @@ namespace LesApi.Services
             {
                 string apiUrl = "https://1b18-105-158-110-135.ngrok-free.app";
                 string endpoint = "/USER-SERVICE/users/agent/get-by-phone/" + phone;
-                string accessToken = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ5b3VuZXNzQGdtYWlsLmNvbSIsImlhdCI6MTcwNDQ2OTM2MywiZXhwIjo2MTY2NjA5NTYwMH0.dDVi0IaEoj-uaP0bqA-6gYeQC6rSQ7aOuV_sfImII1A";
+                string accessToken = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3MDQ1ODAwODEsImV4cCI6NjE2NjYwOTU2MDB9.n5GBa1iHS9qeL9co8GFhLV2Zq8q3e2m2T5QSt_Y5P2E";
 
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken.Substring(7));
 
@@ -154,7 +154,7 @@ namespace LesApi.Services
             {
                 string apiUrl = "https://1b18-105-158-110-135.ngrok-free.app"; // gateway 8080
                 string endpoint = "/USER-SERVICE/users/agent/get-by-piece-identity/" + Nidentity;
-                string accessToken = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ5b3VuZXNzQGdtYWlsLmNvbSIsImlhdCI6MTcwNDQ2OTM2MywiZXhwIjo2MTY2NjA5NTYwMH0.dDVi0IaEoj-uaP0bqA-6gYeQC6rSQ7aOuV_sfImII1A";
+                string accessToken = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3MDQ1ODAwODEsImV4cCI6NjE2NjYwOTU2MDB9.n5GBa1iHS9qeL9co8GFhLV2Zq8q3e2m2T5QSt_Y5P2E";
                 Console.WriteLine(accessToken);
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken.Substring(7));
 
@@ -182,7 +182,7 @@ namespace LesApi.Services
             {
                 string apiUrl = "https://1b18-105-158-110-135.ngrok-free.app"; // gateway 8080
                 string endpoint = "/USER-SERVICE/users/admin/allClients";
-                string accessToken = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ5b3VuZXNzQGdtYWlsLmNvbSIsImlhdCI6MTcwNDQ2OTM2MywiZXhwIjo2MTY2NjA5NTYwMH0.dDVi0IaEoj-uaP0bqA-6gYeQC6rSQ7aOuV_sfImII1A";
+                string accessToken = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3MDQ1ODAwODEsImV4cCI6NjE2NjYwOTU2MDB9.n5GBa1iHS9qeL9co8GFhLV2Zq8q3e2m2T5QSt_Y5P2E";
                 Console.WriteLine(accessToken);
 
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken.Substring(7));
@@ -231,13 +231,13 @@ namespace LesApi.Services
             }
         }
 
-        public async Task<List<Beneficiaire>> GetBeneficiaireAsync(string username)
+        public async Task<List<Beneficaire>> GetBeneficiaireAsync(string username)
         {
             using (HttpClient client = new HttpClient())
             {
                 string apiUrl = "https://1b18-105-158-110-135.ngrok-free.app"; // gateway 8080
                 string endpoint = "/USER-SERVICE/users/agent/get-allbeneficiaire-of-client/" + username;
-                string accessToken = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ5b3VuZXNzQGdtYWlsLmNvbSIsImlhdCI6MTcwNDQ2OTM2MywiZXhwIjo2MTY2NjA5NTYwMH0.dDVi0IaEoj-uaP0bqA-6gYeQC6rSQ7aOuV_sfImII1A";
+                string accessToken = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3MDQ1ODAwODEsImV4cCI6NjE2NjYwOTU2MDB9.n5GBa1iHS9qeL9co8GFhLV2Zq8q3e2m2T5QSt_Y5P2E";
                 Console.WriteLine(accessToken);
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken.Substring(7));
 
@@ -247,7 +247,7 @@ namespace LesApi.Services
                 {
                     string result = await response.Content.ReadAsStringAsync();
                     Console.WriteLine(result);
-                    return JsonConvert.DeserializeObject<List<Beneficiaire>>(result); // Convertir la chaîne JSON en liste d'objets Beneficiaire
+                    return JsonConvert.DeserializeObject<List<Beneficaire>>(result); // Convertir la chaîne JSON en liste d'objets Beneficiaire
                 }
                 else
                 {
