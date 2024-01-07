@@ -123,3 +123,4 @@ C:\Users\rajae\Downloads\TransfertNational\LesApi\obj\Debug\net7.0\transfertServ
 C:\Users\rajae\Downloads\TransfertNational\LesApi\obj\Debug\net7.0\transfertService.genruntimeconfig.cache
 C:\Users\rajae\Downloads\TransfertNational\LesApi\obj\Debug\net7.0\ref\transfertService.dll
 C:\Users\rajae\Downloads\TransfertNational\LesApi\bin\Debug\net7.0\Steeltoe.Discovery.ClientCore.dll
+C:\Users\rajae\Downloads\TransfertNational\LesApi\bin\Debug\net7.0\Newtonsoft.Json.dll

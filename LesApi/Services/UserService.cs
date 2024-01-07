@@ -1,8 +1,12 @@
 ﻿using LesApi.Models;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Numerics;
+using System.Text;
+using transfertService.Models;
 
 namespace LesApi.Services
 {
@@ -19,18 +23,45 @@ namespace LesApi.Services
             _transfert = database.GetCollection<Transfert>(settings.TransfertCollectionName);
         }
 
-        public User AddUser(User user)
+        public async Task<User> AddUserAsync(User user)
         {
-            _user.InsertOne(user);
-            return user;
-        }
+            using (HttpClient client = new HttpClient())
+            {
+                string apiUrl = "https://1b18-105-158-110-135.ngrok-free.app"; // gateway 8080
+                string endpoint = "/USER-SERVICE/users/admin/add-client";
+                string accessToken = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ5b3VuZXNzQGdtYWlsLmNvbSIsImlhdCI6MTcwNDQ2OTM2MywiZXhwIjo2MTY2NjA5NTYwMH0.dDVi0IaEoj-uaP0bqA-6gYeQC6rSQ7aOuV_sfImII1A";
 
+                // Ajouter l'en-tête d'autorisation
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken.Substring(7));
+
+                // Convertir l'objet utilisateur en chaîne JSON
+                string userJson = JsonConvert.SerializeObject(user);
+
+                // Créer le contenu de la requête avec le corps JSON
+                HttpContent content = new StringContent(userJson, Encoding.UTF8, "application/json");
+
+                // Envoyer la requête POST
+                HttpResponseMessage response = await client.PostAsync(apiUrl + endpoint, content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string result = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine(result);
+                    return JsonConvert.DeserializeObject<User>(result); // Convertir la chaîne JSON en objet User
+                }
+                else
+                {
+                    Console.WriteLine($"Error: {response.StatusCode} - {response.ReasonPhrase}");
+                    return null;
+                }
+            }
+        }
         public List<Beneficiaire> GetUserBeneficiaire(string userId)
         {
             List<Beneficiaire> beneficiaires = new List<Beneficiaire>();
             var user = _user.Find(u => u.Id == userId).FirstOrDefault();
 
-            if (user != null && user.Beneficiaires!= null)
+            if (user != null && user.Beneficiaires != null)
             {
                 foreach (var beneficiaireId in user.Beneficiaires)
                 {
@@ -43,17 +74,50 @@ namespace LesApi.Services
 
         public User GetUserById(string userId)
         {
-            if (userId== null || !IsValidObjectIdFormat(userId))
+            Console.WriteLine("****************************************");
+            Console.WriteLine("BEFORE TEST");
+            Console.WriteLine("************************************");
+            if (userId == null || !IsValidObjectIdFormat(userId))
             {
+                Console.WriteLine("****************************************");
+                Console.WriteLine("user id is null");
+                Console.WriteLine("****************************************");
+
                 return null;
             }
+            Console.WriteLine("****************************************");
+            Console.WriteLine("****************************************");
+
             return _user.Find(u => u.Id == userId).FirstOrDefault();
         }
 
-        public User GetUserByGSM(string gsm)
+
+
+
+        public async Task<User> GetUserByGSM(string phone)
         {
-            var filter = Builders<User>.Filter.Eq(u => u.Gsm, gsm);
-            return _user.Find(filter).FirstOrDefault();
+            using (HttpClient client = new HttpClient())
+            {
+                string apiUrl = "https://1b18-105-158-110-135.ngrok-free.app";
+                string endpoint = "/USER-SERVICE/users/agent/get-by-phone/" + phone;
+                string accessToken = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ5b3VuZXNzQGdtYWlsLmNvbSIsImlhdCI6MTcwNDQ2OTM2MywiZXhwIjo2MTY2NjA5NTYwMH0.dDVi0IaEoj-uaP0bqA-6gYeQC6rSQ7aOuV_sfImII1A";
+
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken.Substring(7));
+
+                HttpResponseMessage response = await client.GetAsync(apiUrl + endpoint);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string result = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine(result);
+                    return JsonConvert.DeserializeObject<User>(result);
+                }
+                else
+                {
+                    Console.WriteLine($"Error: {response.StatusCode} - {response.ReasonPhrase}");
+                    return null;
+                }
+            }
         }
 
 
@@ -84,21 +148,61 @@ namespace LesApi.Services
             return datePremierTransfert;
         }
 
-        public User GetUserByIdentity(string Nidentity)
+        public async Task<User> GetUserByIdentityAsync(string Nidentity)
         {
-            return _user.Find(u => u.nidentity == Nidentity).FirstOrDefault();
+            using (HttpClient client = new HttpClient())
+            {
+                string apiUrl = "https://1b18-105-158-110-135.ngrok-free.app"; // gateway 8080
+                string endpoint = "/USER-SERVICE/users/agent/get-by-piece-identity/" + Nidentity;
+                string accessToken = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ5b3VuZXNzQGdtYWlsLmNvbSIsImlhdCI6MTcwNDQ2OTM2MywiZXhwIjo2MTY2NjA5NTYwMH0.dDVi0IaEoj-uaP0bqA-6gYeQC6rSQ7aOuV_sfImII1A";
+                Console.WriteLine(accessToken);
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken.Substring(7));
+
+                HttpResponseMessage response = await client.GetAsync(apiUrl + endpoint);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string result = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine(result);
+                    return JsonConvert.DeserializeObject<User>(result); // Convertir la chaîne JSON en objet User
+                }
+                else
+                {
+                    Console.WriteLine($"Error: {response.StatusCode} - {response.ReasonPhrase}");
+                    return null;
+                }
+            }
         }
 
-        public List<User> GetAllUser()
+
+        public List<User> GetAllUsers(HttpRequest request)
         {
-            // Utilisez la méthode Find pour obtenir tous les transferts dans la collection
-            var users = _user.Find(_ => true);
 
-            // Convertissez les documents en liste de transferts
-            List<User> UsersList= users.ToList();
+            using (HttpClient client = new HttpClient())
+            {
+                string apiUrl = "https://1b18-105-158-110-135.ngrok-free.app"; // gateway 8080
+                string endpoint = "/USER-SERVICE/users/admin/allClients";
+                string accessToken = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ5b3VuZXNzQGdtYWlsLmNvbSIsImlhdCI6MTcwNDQ2OTM2MywiZXhwIjo2MTY2NjA5NTYwMH0.dDVi0IaEoj-uaP0bqA-6gYeQC6rSQ7aOuV_sfImII1A";
+                Console.WriteLine(accessToken);
 
-            return UsersList;
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken.Substring(7));
+
+                HttpResponseMessage response = client.GetAsync(apiUrl + endpoint).Result;  // Utilisation de .Result pour obtenir le résultat synchronement.
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string result = response.Content.ReadAsStringAsync().Result;
+                    Console.WriteLine(result);
+                    return JsonConvert.DeserializeObject<List<User>>(result); // Convertir la chaîne JSON en liste d'objets User
+                }
+                else
+                {
+                    Console.WriteLine($"Error: {response.StatusCode} - {response.ReasonPhrase}");
+                    return null; // Retournez null ou une liste vide, selon votre gestion d'erreur
+                }
+            }
         }
+
         public static bool IsValidObjectIdFormat(string id)
         {
             return ObjectId.TryParse(id, out _);
@@ -127,6 +231,78 @@ namespace LesApi.Services
             }
         }
 
+        public async Task<List<Beneficiaire>> GetBeneficiaireAsync(string username)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string apiUrl = "https://1b18-105-158-110-135.ngrok-free.app"; // gateway 8080
+                string endpoint = "/USER-SERVICE/users/agent/get-allbeneficiaire-of-client/" + username;
+                string accessToken = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ5b3VuZXNzQGdtYWlsLmNvbSIsImlhdCI6MTcwNDQ2OTM2MywiZXhwIjo2MTY2NjA5NTYwMH0.dDVi0IaEoj-uaP0bqA-6gYeQC6rSQ7aOuV_sfImII1A";
+                Console.WriteLine(accessToken);
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken.Substring(7));
+
+                HttpResponseMessage response = await client.GetAsync(apiUrl + endpoint);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string result = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine(result);
+                    return JsonConvert.DeserializeObject<List<Beneficiaire>>(result); // Convertir la chaîne JSON en liste d'objets Beneficiaire
+                }
+                else
+                {
+                    Console.WriteLine($"Error: {response.StatusCode} - {response.ReasonPhrase}");
+                    return null;
+                }
+            }
+        }
+
+        public async Task<UserDTO> EditUserAsync(UserDTO user, string username)
+        {
+            try
+            {
+                string apiUrl = "https://1b18-105-158-110-135.ngrok-free.app"; // gateway 8080
+                string endpoint = $"/USER-SERVICE/users/update-info/{username}";
+                string accessToken = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3MDQ1ODAwODEsImV4cCI6NjE2NjYwOTU2MDB9.n5GBa1iHS9qeL9co8GFhLV2Zq8q3e2m2T5QSt_Y5P2E";
+
+                using (HttpClient client = new HttpClient())
+                {
+                    // Ajouter l'en-tête d'autorisation
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken.Substring(7));
+
+                    // Convertir l'objet utilisateur en chaîne JSON
+                    string userJson = JsonConvert.SerializeObject(user);
+                    Console.WriteLine(userJson);
+
+                    // Créer le contenu de la requête avec le corps JSON
+                    HttpContent content = new StringContent(userJson, Encoding.UTF8, "application/json");
+
+                    // Envoyer la requête PUT
+                    HttpResponseMessage response = await client.PostAsync(apiUrl + endpoint, content);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string result = await response.Content.ReadAsStringAsync();
+                        Console.WriteLine(result);
+                        return JsonConvert.DeserializeObject<UserDTO>(result); // Convertir la chaîne JSON en objet User
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Error: {response.StatusCode} - {response.ReasonPhrase}");
+                        return null;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+                return null;
+            }
+        }
 
     }
+
+
 }
+
+

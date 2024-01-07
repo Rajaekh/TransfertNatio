@@ -3,6 +3,9 @@ using LesApi.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
+using Newtonsoft.Json;
+using System.Text;
+using transfertService.Models;
 
 namespace LesApi.Controllers
 {
@@ -15,91 +18,146 @@ namespace LesApi.Controllers
         {
             _user = user;
         }
-
-
+        
         [HttpGet]
-        public ActionResult<User> GetAllUsers()
+        public async Task<ActionResult<IEnumerable<User>>> GetAllUsers()
         {
-            return Ok(_user.GetAllUser());
+            // Appeler la méthode du service
+            var request = HttpContext.Request;
+            List<User> users = _user.GetAllUsers(request);
+
+            if (users != null)
+            {
+                // Faites quelque chose avec la liste d'utilisateurs (par exemple, retournez-la dans la réponse HTTP)
+                return Ok(users);
+            }
+            else
+            {
+                // Gérez le cas où la récupération des utilisateurs a échoué
+                return BadRequest("Failed to retrieve users from the external API or database.");
+            }
         }
 
-        // GET api/<ClientController>/5
-        [HttpGet("{gsm}")]
-        public ActionResult<User> Get(string gsm)
+        [HttpGet("{phone}")]
+        public async Task<ActionResult<User>> Get(string phone)
         {
-            var user = _user.GetUserByGSM(gsm);
-            if (user == null)
+            try
             {
-                return NotFound($"Client with GSM={gsm} not found");
+                var user = await _user.GetUserByGSM(phone);
+
+                if (user != null)
+                {
+                    return Ok(user);
+                }
+                else
+                {
+                    return NotFound(); // Ou BadRequest selon votre logique
+                }
             }
-            return Ok(user);
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
         }
+
+
+
         // recuperer user by Identity:
-        // recuperer user by Identity:
-        [HttpGet("UserByIdentity/{Nid}")]
-        public ActionResult<User> GetUserByIdentity(string Nid)
+        [HttpGet("UserByIdentity/{numeroPieceIdentite}")]
+       
+        public async Task<ActionResult<User>> GetUserByIdentity(string numeroPieceIdentite)
         {
-            var user = _user.GetUserByIdentity(Nid);
-            if (user == null)
+            try
             {
-                return NotFound($"User with Identity={Nid} not found");
-            }
-            return Ok(user);
-        }
+                var user = await _user.GetUserByIdentityAsync(numeroPieceIdentite);
 
-        [HttpGet("UserById/{id}")]
-        public ActionResult<User> GetUserById(string id)
-        {
-            var user = _user.GetUserById(id);
-            if (user == null)
-            {
-                return NotFound($"User with Identity={id} not found");
+                if (user != null)
+                {
+                    return Ok(user);
+                }
+                else
+                {
+                    return NotFound(); // Ou BadRequest selon votre logique
+                }
             }
-            return Ok(user);
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
         }
-
-        // GET api/<ClientController>/5
-        [HttpGet("beneficiaire/{IdUser}")]
-        public ActionResult<List<Beneficiaire>> GetBeneficiaire(string IdUser)
+        [HttpGet("beneficiaire/{username}")]
+        public async Task<ActionResult<List<Beneficiaire>>> GetBeneficiaire(string username)
         {
-            if (_user.GetUserById(IdUser)== null)
+            try
             {
-                return NotFound($"Client with Id={IdUser} not found");
+                var beneficiaires = await _user.GetBeneficiaireAsync(username);
+
+                if (beneficiaires != null)
+                {
+                    return Ok(beneficiaires);
+                }
+                else
+                {
+                    return BadRequest("Failed to retrieve beneficiaires from the external API or database.");
+                }
             }
-            return _user.GetUserBeneficiaire(IdUser);
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
         }
 
         // POST api/<ClientController>
         [HttpPost]
-        public ActionResult<User> Post([FromBody] User user)
+        public async Task<ActionResult<User>> Post([FromBody] User user)
         {
-            // Vérifier si le numéro de téléphone est déjà utilisé
-            var existingUser = _user.GetUserByGSM(user.Gsm);
-            if (existingUser != null)
-            {
-                // Le numéro de téléphone est déjà utilisé, renvoyer une réponse d'erreur
-                return Conflict("Le numéro de téléphone doit être unique.");
-            }
-
           
-                _user.AddUser(user);
+                var addedUser = await _user.AddUserAsync(user);
 
-                return Ok(user);     
-        }
-
-        [HttpPut("{id}")]
-        public ActionResult<User> EditUser(string id, [FromBody] User user)
-        {
-            var existingUser = _user.GetUserById(id);
-
-            if (existingUser == null)
-            {
-                return NotFound($"User with ID={id} not found");
-            }
-            _user.EditUser(user);
-            return Ok(_user.GetUserByGSM(user.Gsm));
+                if (addedUser != null)
+                {
+                    return Ok(addedUser);
+                }
+                else
+                {
+                    return BadRequest("Failed to add the user through the external API.");
+                }
             
         }
+        //var existingUser = _user.GetUserById(id);
+
+        //if (existingUser == null)
+        //{
+        //    return NotFound($"User with ID={id} not found");
+        //}
+        //_user.EditUser(user);
+        //return Ok(_user.GetUserByGSM(user.Gsm));
+        [HttpPut("{username}")]
+        public async Task<ActionResult<UserDTO>> EditUser(string username, [FromBody] UserDTO user)
+        {
+            try
+            {
+                var editedUser = await _user.EditUserAsync(user,username);
+
+                if (editedUser != null)
+                {
+                    return Ok(editedUser);
+                }
+                else
+                {
+                    return NotFound(); // Ou BadRequest() selon la logique de gestion d'erreur que vous préférez
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex.Message}");
+                return StatusCode(500, "Internal Server Error"); // Gestion des exceptions
+            }
+        }
+
         [HttpDelete("{id}")]
         public ActionResult<User> DeleteUser(string id)
         {
@@ -110,9 +168,17 @@ namespace LesApi.Controllers
                var deletedUser = _user.deleteUser(id);
                 return Ok(deletedUser);
             }
-            
-       
 
+        [HttpGet("userbyId/{id}")]
+        public ActionResult<User> GetUserById(string id)
+        {
+            var user = _user.GetUserById(id);
+            if (user == null)
+            {
+                return NotFound($"User with ID={id} not found");
+            }
+            return Ok(user);
+        }
 
 
 

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "FFkKfzuH9I6VUBodWHvsidm1zyhVRaItzhlT/Vn9r9xOeFFAKDgJqcP+UoxEHB4csIMUlq3U6w+4/n+wpMqSew==",
+  "dgSpecHash": "G1JSBQ3GUQnT39UunSmcK6eZzkNxwbXnjvnG5oue73Ohlif81pYYMX7aMZCmNQY4pm6XcnE+yPOVpUKHVVLoIw==",
   "success": true,
   "projectFilePath": "C:\\Users\\rajae\\Downloads\\TransfertNational\\LesApi\\transfertService.csproj",
   "expectedPackageFiles": [
@@ -43,6 +43,7 @@
     "C:\\Users\\rajae\\.nuget\\packages\\mongodb.driver\\2.23.1\\mongodb.driver.2.23.1.nupkg.sha512",
     "C:\\Users\\rajae\\.nuget\\packages\\mongodb.driver.core\\2.23.1\\mongodb.driver.core.2.23.1.nupkg.sha512",
     "C:\\Users\\rajae\\.nuget\\packages\\mongodb.libmongocrypt\\1.8.0\\mongodb.libmongocrypt.1.8.0.nupkg.sha512",
+    "C:\\Users\\rajae\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\rajae\\.nuget\\packages\\pdfsharpcore\\1.1.21\\pdfsharpcore.1.1.21.nupkg.sha512",
     "C:\\Users\\rajae\\.nuget\\packages\\polybioz.htmlrenderer.pdfsharp.core\\1.0.0\\polybioz.htmlrenderer.pdfsharp.core.1.0.0.nupkg.sha512",
     "C:\\Users\\rajae\\.nuget\\packages\\sharpcompress\\0.30.1\\sharpcompress.0.30.1.nupkg.sha512",

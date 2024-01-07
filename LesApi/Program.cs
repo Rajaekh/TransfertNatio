@@ -19,7 +19,7 @@ new MongoClient(builder.Configuration.GetValue<string>("TransfertDatabaseSetting
 builder.Services.AddScoped<IFrais,FraisService>();
 builder.Services.AddScoped<IBeneficiaire,BeneficiaireService>();
 builder.Services.AddScoped<ITransfert,TransfereService>();
-builder.Services.AddScoped<IUser, UserService>();
+builder.Services.AddScoped<IUser,UserService>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
