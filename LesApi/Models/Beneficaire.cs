@@ -20,5 +20,8 @@ namespace LesApi.Models
 
         [BsonElement("pieceIdentity")]
         public string pieceIdentity { get; set; }
+
+            [BsonElement("_class")]
+        public string? _class { get; set; }
     }
 }

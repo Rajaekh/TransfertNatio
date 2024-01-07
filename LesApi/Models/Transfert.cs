@@ -54,6 +54,9 @@ namespace LesApi.Models
         [BsonElement("reference")]
         public string? Reference { get; set; }
 
+        [BsonElement("_class")]
+        public string? _class { get; set; }
+
         public static implicit operator string(Transfert v)
         {
             throw new NotImplementedException();

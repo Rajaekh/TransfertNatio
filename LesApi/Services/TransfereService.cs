@@ -34,7 +34,6 @@ namespace LesApi.Services
 
                 // Vérifiez si l'utilisateur est trouvé
                 var user = _user.GetUserById(idClient);
-
                 if (user != null)
                 {
                     // Vérifiez si la date actuelle est après un an à partir de la date du premier transfert

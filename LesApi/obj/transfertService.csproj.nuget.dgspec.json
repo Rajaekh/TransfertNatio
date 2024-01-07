@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\rajae\\Downloads\\TransfertNational\\LesApi\\transfertService.csproj": {}
+    "C:\\Users\\Yyoun\\Pictures\\Camera Roll\\TransfertNatio\\LesApi\\transfertService.csproj": {}
   },
   "projects": {
-    "C:\\Users\\rajae\\Downloads\\TransfertNational\\LesApi\\transfertService.csproj": {
+    "C:\\Users\\Yyoun\\Pictures\\Camera Roll\\TransfertNatio\\LesApi\\transfertService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\rajae\\Downloads\\TransfertNational\\LesApi\\transfertService.csproj",
+        "projectUniqueName": "C:\\Users\\Yyoun\\Pictures\\Camera Roll\\TransfertNatio\\LesApi\\transfertService.csproj",
         "projectName": "transfertService",
-        "projectPath": "C:\\Users\\rajae\\Downloads\\TransfertNational\\LesApi\\transfertService.csproj",
-        "packagesPath": "C:\\Users\\rajae\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\rajae\\Downloads\\TransfertNational\\LesApi\\obj\\",
+        "projectPath": "C:\\Users\\Yyoun\\Pictures\\Camera Roll\\TransfertNatio\\LesApi\\transfertService.csproj",
+        "packagesPath": "C:\\Users\\Yyoun\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Yyoun\\Pictures\\Camera Roll\\TransfertNatio\\LesApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\rajae\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Yyoun\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,7 +22,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\sdk\\7.0.306\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -89,7 +88,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
         }
       }
     }

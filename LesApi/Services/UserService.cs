@@ -27,7 +27,7 @@ namespace LesApi.Services
         {
             using (HttpClient client = new HttpClient())
             {
-                string apiUrl = "https://1b18-105-158-110-135.ngrok-free.app"; // gateway 8080
+                string apiUrl = "http://localhost:8080"; // gateway 8080
                 string endpoint = "/USER-SERVICE/users/admin/add-client";
                 string accessToken = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3MDQ1ODAwODEsImV4cCI6NjE2NjYwOTU2MDB9.n5GBa1iHS9qeL9co8GFhLV2Zq8q3e2m2T5QSt_Y5P2E";
 
@@ -74,21 +74,16 @@ namespace LesApi.Services
 
         public User GetUserById(string userId)
         {
-            Console.WriteLine("****************************************");
-            Console.WriteLine("BEFORE TEST");
-            Console.WriteLine("************************************");
             if (userId == null || !IsValidObjectIdFormat(userId))
             {
-                Console.WriteLine("****************************************");
-                Console.WriteLine("user id is null");
-                Console.WriteLine("****************************************");
+
 
                 return null;
             }
-            Console.WriteLine("****************************************");
-            Console.WriteLine("****************************************");
 
-            return _user.Find(u => u.Id == userId).FirstOrDefault();
+            var projection = Builders<User>.Projection.Exclude(u => u.beneficiaires);
+            var user = _user.Find(u => u.Id == userId).Project<User>(projection).FirstOrDefault();
+            return user;
         }
 
 
@@ -98,7 +93,7 @@ namespace LesApi.Services
         {
             using (HttpClient client = new HttpClient())
             {
-                string apiUrl = "https://1b18-105-158-110-135.ngrok-free.app";
+                string apiUrl = "http://localhost:8080";
                 string endpoint = "/USER-SERVICE/users/agent/get-by-phone/" + phone;
                 string accessToken = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3MDQ1ODAwODEsImV4cCI6NjE2NjYwOTU2MDB9.n5GBa1iHS9qeL9co8GFhLV2Zq8q3e2m2T5QSt_Y5P2E";
 
@@ -123,8 +118,16 @@ namespace LesApi.Services
 
         public User EditUser(User user)
         {
+            // var filter = Builders<User>.Filter.Eq(u => u.Id, user.Id);
+            // var result = _user.ReplaceOne(filter, user);
+
             var filter = Builders<User>.Filter.Eq(u => u.Id, user.Id);
-            var result = _user.ReplaceOne(filter, user);
+            var update = Builders<User>.Update
+                .Set(u => u.montant, user.montant);
+
+            var result = _user.UpdateOne(filter, update);
+
+
 
             if (result.ModifiedCount > 0)
             {
@@ -152,12 +155,12 @@ namespace LesApi.Services
         {
             using (HttpClient client = new HttpClient())
             {
-                string apiUrl = "https://1b18-105-158-110-135.ngrok-free.app"; // gateway 8080
+                string apiUrl = "http://localhost:8080"; // gateway 8080
                 string endpoint = "/USER-SERVICE/users/agent/get-by-piece-identity/" + Nidentity;
                 string accessToken = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3MDQ1ODAwODEsImV4cCI6NjE2NjYwOTU2MDB9.n5GBa1iHS9qeL9co8GFhLV2Zq8q3e2m2T5QSt_Y5P2E";
-                Console.WriteLine(accessToken);
+                // Console.WriteLine(accessToken);
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken.Substring(7));
-
+                Console.WriteLine(endpoint);
                 HttpResponseMessage response = await client.GetAsync(apiUrl + endpoint);
 
                 if (response.IsSuccessStatusCode)
@@ -180,7 +183,7 @@ namespace LesApi.Services
 
             using (HttpClient client = new HttpClient())
             {
-                string apiUrl = "https://1b18-105-158-110-135.ngrok-free.app"; // gateway 8080
+                string apiUrl = "http://localhost:8080"; // gateway 8080
                 string endpoint = "/USER-SERVICE/users/admin/allClients";
                 string accessToken = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3MDQ1ODAwODEsImV4cCI6NjE2NjYwOTU2MDB9.n5GBa1iHS9qeL9co8GFhLV2Zq8q3e2m2T5QSt_Y5P2E";
                 Console.WriteLine(accessToken);
@@ -235,12 +238,14 @@ namespace LesApi.Services
         {
             using (HttpClient client = new HttpClient())
             {
-                string apiUrl = "https://1b18-105-158-110-135.ngrok-free.app"; // gateway 8080
-                string endpoint = "/USER-SERVICE/users/agent/get-allbeneficiaire-of-client/" + username;
+                string apiUrl = "http://localhost:8080"; // gateway 8080
+                string endpoint = "/USER-SERVICE/users/get-allbeneficiaire-of-client/" + username;
                 string accessToken = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3MDQ1ODAwODEsImV4cCI6NjE2NjYwOTU2MDB9.n5GBa1iHS9qeL9co8GFhLV2Zq8q3e2m2T5QSt_Y5P2E";
-                Console.WriteLine(accessToken);
+                // Console.WriteLine(accessToken);
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken.Substring(7));
-
+                Console.WriteLine("*************************************");
+                Console.WriteLine(endpoint);
+                Console.WriteLine("**************************************");
                 HttpResponseMessage response = await client.GetAsync(apiUrl + endpoint);
 
                 if (response.IsSuccessStatusCode)
@@ -261,7 +266,7 @@ namespace LesApi.Services
         {
             try
             {
-                string apiUrl = "https://1b18-105-158-110-135.ngrok-free.app"; // gateway 8080
+                string apiUrl = "http://localhost:8080"; // gateway 8080
                 string endpoint = $"/USER-SERVICE/users/update-info/{username}";
                 string accessToken = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3MDQ1ODAwODEsImV4cCI6NjE2NjYwOTU2MDB9.n5GBa1iHS9qeL9co8GFhLV2Zq8q3e2m2T5QSt_Y5P2E";
 

@@ -41,7 +41,7 @@ namespace LesApi.Services
         {
             using (HttpClient client = new HttpClient())
             {
-                string apiUrl = "https://1b18-105-158-110-135.ngrok-free.app"; // gateway 8080
+                string apiUrl = "http://localhost:8080"; // gateway 8080
                 string endpoint = $"/USER-SERVICE/users/addBeneficiaire-to-client/{username}";
                 string accessToken = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3MDQ1ODAwODEsImV4cCI6NjE2NjYwOTU2MDB9.n5GBa1iHS9qeL9co8GFhLV2Zq8q3e2m2T5QSt_Y5P2E";
 
@@ -77,7 +77,7 @@ namespace LesApi.Services
         {
             using (HttpClient client = new HttpClient())
             {
-                string apiUrl = "https://1b18-105-158-110-135.ngrok-free.app";
+                string apiUrl = "http://localhost:8080";
                 string endpoint = $"/USER-SERVICE/beneficiaires/beneficiaires/getByPhoneAndUsername/{phone}/{username}"; // Ajout du paramètre username à la chaîne de requête
                 string accessToken = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpYXQiOjE3MDQ1ODAwODEsImV4cCI6NjE2NjYwOTU2MDB9.n5GBa1iHS9qeL9co8GFhLV2Zq8q3e2m2T5QSt_Y5P2E";
 

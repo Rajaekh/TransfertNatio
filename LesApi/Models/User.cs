@@ -9,7 +9,7 @@ namespace LesApi.Models
     {
         [BsonId]
         //[BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; };
+        public string Id { get; set; }
 
         [BsonElement("name")]
         public string name { get; set; }
@@ -88,6 +88,7 @@ namespace LesApi.Models
 
         [BsonElement("beneficiaires")]
         public List<string>? beneficiaires { get; set; } = new List<string>();
+
         [BsonElement("_class")]
         public string? _class { get; set; }
 
