@@ -18,7 +18,7 @@ namespace LesApi.Services
         Task<List<Beneficiaire>> GetBeneficiaireAsync(string username);
 
         User EditUser(User user);
-        Task<UserDTO> EditUserAsync(UserDTO user, string username);
+        Task<User> EditUserAsync(User user, string username);
         Task<User> GetUserByIdentityAsync(string numeroPieceIdentite);
 
         User deleteUser(string id);

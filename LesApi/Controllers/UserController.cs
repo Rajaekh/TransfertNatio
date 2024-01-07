@@ -136,7 +136,7 @@ namespace LesApi.Controllers
         //_user.EditUser(user);
         //return Ok(_user.GetUserByGSM(user.Gsm));
         [HttpPut("{username}")]
-        public async Task<ActionResult<UserDTO>> EditUser(string username, [FromBody] UserDTO user)
+        public async Task<ActionResult<User>> EditUser(string username, [FromBody] User user)
         {
             try
             {

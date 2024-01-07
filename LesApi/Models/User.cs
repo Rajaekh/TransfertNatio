@@ -12,82 +12,82 @@ namespace LesApi.Models
         public string Id { get; set; } = String.Empty;
 
         [BsonElement("name")]
-        public string Name { get; set; }
+        public string name { get; set; }
 
         [BsonElement("lastname")]
-        public string Lastname { get; set; }
+        public string lastname { get; set; }
 
         [BsonElement("email")]
-        public string Email { get; set; }
+        public string email { get; set; }
 
         [BsonElement("password")]
-        public string Password { get; set; }
+        public string? password { get; set; }
 
         [BsonElement("role")]
-        public string? Role { get; set; }
+        public string? role { get; set; }
 
         [BsonElement("titre")]
-        public string? Titre { get; set; }
+        public string? titre { get; set; }
 
         [BsonElement("typePieceIdentity")]
-        public string? TypePieceIdentity { get; set; }
+        public string? typePieceIdentity { get; set; }
 
         [BsonElement("nidentity")]
         public string? nidentity { get; set; }
 
         [BsonElement("gsm")]
-        public string Gsm { get; set; }
+        public string gsm { get; set; }
 
         [BsonElement("paysEmission")]
-        public string? PaysEmission { get; set; }
+        public string? paysEmission { get; set; }
 
         [BsonElement("numeroPieceIdentite")]
-        public string? NumeroPieceIdentite { get; set; }
+        public string? numeroPieceIdentite { get; set; }
 
         [BsonElement("dateExpirationPiece")]
         [BsonRepresentation(BsonType.DateTime)]
-        public DateTime? DateExpirationPiece { get; set; }
+        public DateTime? dateExpirationPiece { get; set; }
 
         [BsonElement("validitePieceIdentite")]
         [BsonRepresentation(BsonType.DateTime)]
-        public DateTime? ValiditePieceIdentite { get; set; }
+        public DateTime? validitePieceIdentite { get; set; }
 
         [BsonElement("dateNaissance")]
         [BsonRepresentation(BsonType.DateTime)]
-        public DateTime? DateNaissance { get; set; }
+        public DateTime? dateNaissance { get; set; }
 
         [BsonElement("datePremierTransfert")]
-        public DateTime? DatePremierTransfert { get; set; }
+        public DateTime? datePremierTransfert { get; set; }
 
         [BsonElement("profession")]
-        public string? Profession { get; set; }
+        public string? profession { get; set; }
 
         [BsonElement("paysNationalite")]
-        public string? PaysNationalite { get; set; }
+        public string? paysNationalite { get; set; }
 
         [BsonElement("paysAdresse")]
-        public string? PaysAdresse { get; set; }
+        public string?paysAdresse { get; set; }
 
         [BsonElement("adresseLegale")]
-        public string? AdresseLegale { get; set; }
+        public string? adresseLegale { get; set; }
 
         [BsonElement("ville")]
-        public string? Ville { get; set; }
+        public string? ville { get; set; }
 
         [BsonElement("estSupprimer")]
-        public bool? EstSupprimer { get; set; }
+        public bool? estSupprimer { get; set; }
 
         [BsonElement("surListeNoire")]
         public bool? surListeNoire { get; set; }
 
         [BsonElement("montant")]
-        public double? Montant { get; set; }
+        public double? montant { get; set; }
 
         [BsonElement("montantTransfertAnnuel")]
-        public double? MontantTransfertAnnuel { get; set; }
+        public double? montantTransfertAnnuel { get; set; }
 
         [BsonElement("beneficiaires")]
-        public List<string>? Beneficiaires { get; set; } = new List<string>();
+        public List<string>? beneficiaires { get; set; } = new List<string>();
         [BsonElement("_class")]
         public string? _class { get; set; }
 

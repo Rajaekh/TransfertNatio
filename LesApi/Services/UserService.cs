@@ -61,9 +61,9 @@ namespace LesApi.Services
             List<Beneficiaire> beneficiaires = new List<Beneficiaire>();
             var user = _user.Find(u => u.Id == userId).FirstOrDefault();
 
-            if (user != null && user.Beneficiaires != null)
+            if (user != null && user.beneficiaires != null)
             {
-                foreach (var beneficiaireId in user.Beneficiaires)
+                foreach (var beneficiaireId in user.beneficiaires)
                 {
                     beneficiaires.Add(_beneficiaire.GetBeneficiaireById(beneficiaireId));
                 }
@@ -257,7 +257,7 @@ namespace LesApi.Services
             }
         }
 
-        public async Task<UserDTO> EditUserAsync(UserDTO user, string username)
+        public async Task<User> EditUserAsync(User user, string username)
         {
             try
             {
@@ -284,7 +284,7 @@ namespace LesApi.Services
                     {
                         string result = await response.Content.ReadAsStringAsync();
                         Console.WriteLine(result);
-                        return JsonConvert.DeserializeObject<UserDTO>(result); // Convertir la chaîne JSON en objet User
+                        return JsonConvert.DeserializeObject<User>(result); // Convertir la chaîne JSON en objet User
                     }
                     else
                     {

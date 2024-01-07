@@ -156,7 +156,7 @@ namespace LesApi.Controllers
 
                 var user = _user.GetUserById(transfert.IdClient);
 
-                if (transfert != null && transfert.TypeTransfert.Equals("En espèce") && user.Role.Equals("AGENT"))
+                if (transfert != null && transfert.TypeTransfert.Equals("En espèce") && user.role.Equals("AGENT"))
                 {
                     transfert.IdClient = transfert.Idagent;
                     transfert.PlafondMaximal = 80000;
@@ -167,7 +167,7 @@ namespace LesApi.Controllers
 
                 // Ajoutez la condition pour vérifier si le transfert dépasse le montant annuel autorisé
                 // condition annuel pour client seulemet
-                if (depasseAnnuel &&  user.Role.Equals("CLIENT"))
+                if (depasseAnnuel &&  user.role.Equals("CLIENT"))
                 {
                     return BadRequest(new { error = "Le transfert ne peut pas être effectué : le montant annuel autorisé serait dépassé." });
                 }
@@ -175,13 +175,13 @@ namespace LesApi.Controllers
                 {
                     return BadRequest(new { error = $"Le transfert ne peut pas être effectué : le montant du transfert > plafond maximal du transfert {transfert.PlafondMaximal}" });
                 }
-                else if (MontantTotal > user.Montant)
+                else if (MontantTotal > user.montant)
                 {
                     return BadRequest(new { error = "Le transfert ne peut pas être effectué : le montant du transfert > solde de compte de paiement du client." });
                 }
 
                 // Soustraction du montant du transfert du solde du compte utilisateur
-                user.Montant -= MontantTotal;
+                user.montant -= MontantTotal;
 
                 // Mise à jour de l'utilisateur dans la base de données
                 _user.EditUser(user);
@@ -227,7 +227,7 @@ namespace LesApi.Controllers
         string GetUserFullName(string userId)
         {
             var user = _user.GetUserById(userId);
-            return user != null ? user.Lastname + " " + user.Name : "N/A";
+            return user != null ? user.lastname + " " + user.name : "N/A";
         }
 
     }

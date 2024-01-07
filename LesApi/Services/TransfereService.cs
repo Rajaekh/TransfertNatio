@@ -41,15 +41,15 @@ namespace LesApi.Services
                     if (dateActuelle > datePremierTransfert.AddYears(1))
                     {
                         // Si nous sommes après un an, réinitialisez le montant annuel de transfert
-                        user.MontantTransfertAnnuel = montantTransfert;
+                        user.montantTransfertAnnuel = montantTransfert;
                         // Mettez à jour la date du premier transfert
-                        user.DatePremierTransfert = dateActuelle;
+                        user.datePremierTransfert = dateActuelle;
                         return false;
                     }
                     else
                     {
                         // Si nous sommes toujours dans la même année, vérifiez le montant annuel par rapport au plafond
-                        if (user.MontantTransfertAnnuel + montantTransfert > PlafondAnnuel)
+                        if (user.montantTransfertAnnuel + montantTransfert > PlafondAnnuel)
                         {
                             // Le transfert ne peut pas être effectué car le plafond annuel serait dépassé
                             return true;
@@ -57,7 +57,7 @@ namespace LesApi.Services
                         else
                         {
                             // Mettez à jour le montant annuel de transfert
-                            user.MontantTransfertAnnuel += montantTransfert;
+                            user.montantTransfertAnnuel += montantTransfert;
                             return false;
                         }
                     }
@@ -95,7 +95,7 @@ namespace LesApi.Services
                     transfert.MotifRestitution = trans.MotifRestitution;
                     transfert.Status = trans.Status;
                     //Modifier l user:
-                    user.Montant= (double)(transfert.Montant + transfert.ValFrais);
+                    user.montant= (double)(transfert.Montant + transfert.ValFrais);
                     _user.EditUser(user);
                 }
                 else if (trans.Equals("Restitué") && (transfert.Status.Equals("à servir") || transfert.Status.Equals("débloqué à servir")))
@@ -103,7 +103,7 @@ namespace LesApi.Services
                     transfert.AutreMotif = trans.AutreMotif;
                     transfert.MotifRestitution = trans.MotifRestitution;
                     transfert.Status = trans.Status;
-                    user.Montant = trans.Montant;
+                    user.montant = trans.Montant;
                     _user.EditUser(user);
                 }
                 else if (trans.Equals("Payé") && (transfert.Status.Equals("à servir") || transfert.Status.Equals("débloqué à servir")))
@@ -393,7 +393,7 @@ th {{background - color: #0C5973;
         string GetUserFullName(string userId)
         {
             var user = _user.GetUserById(userId);
-            return user != null ? user.Lastname + " " + user.Name : "N/A";
+            return user != null ? user.lastname + " " + user.name : "N/A";
         }
 
     }
